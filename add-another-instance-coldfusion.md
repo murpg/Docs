@@ -23,7 +23,8 @@ After modifying permissions, restart all ColdFusion services.
 ## Creating the New Instance
 
 1. Create the new instance through the ColdFusion Administrator
-2. Use the following PowerShell script to properly set up the service (replace "cfusiontwo" with your instance name)
+2. Use the following PowerShell script to properly set up the service (replace "cfusiontwo" with your instance name)  
+3. If your ColdFusion instances are not on D:\ColdFusion2021 you will need to update the script below
 
 ```powershell
 # Function to force stop a service and its processes
