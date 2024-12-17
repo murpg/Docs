@@ -20,6 +20,94 @@ For each path:
 
 After modifying permissions, restart all ColdFusion services.
 
+## Apply permissions with Powershell
+
+```
+# Requires running as Administrator
+#Requires -RunAsAdministrator
+
+function Set-RegistryPermissions {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$ServiceAccount,
+        
+        [Parameter(Mandatory=$false)]
+        [string[]]$RegistryPaths = @(
+            'HKLM:\SYSTEM\CurrentControlSet\Services',
+            'HKLM:\SYSTEM\ControlSet001\Services',
+            'HKLM:\SYSTEM\ControlSet002\Services'
+        )
+    )
+    
+    try {
+        # Load the required type
+        $identity = New-Object System.Security.Principal.NTAccount($ServiceAccount)
+        
+        foreach ($registryPath in $RegistryPaths) {
+            Write-Host "Processing $registryPath..."
+            
+            # Check if path exists
+            if (-not (Test-Path $registryPath)) {
+                Write-Warning "Registry path does not exist: $registryPath"
+                continue
+            }
+            
+            # Get existing ACL
+            $acl = Get-Acl $registryPath
+            
+            # Create new rule
+            $rights = [System.Security.AccessControl.RegistryRights]::FullControl
+            $inheritance = [System.Security.AccessControl.InheritanceFlags]"ContainerInherit,ObjectInherit"
+            $propagation = [System.Security.AccessControl.PropagationFlags]::None
+            $type = [System.Security.AccessControl.AccessControlType]::Allow
+            
+            try {
+                $rule = New-Object System.Security.AccessControl.RegistryAccessRule($identity, $rights, $inheritance, $propagation, $type)
+            }
+            catch {
+                throw "Failed to create access rule for account '$ServiceAccount'. Please verify the account exists. Error: $_"
+            }
+            
+            # Add new rule to ACL
+            $acl.AddAccessRule($rule)
+            
+            # Apply the new ACL
+            try {
+                $acl | Set-Acl -Path $registryPath
+                Write-Host "Successfully applied permissions for $ServiceAccount to $registryPath" -ForegroundColor Green
+            }
+            catch {
+                throw "Failed to apply permissions to $registryPath. Error: $_"
+            }
+        }
+        
+        Write-Host "`nPermissions have been applied successfully to all registry paths." -ForegroundColor Green
+        Write-Host "Please restart all ColdFusion services for the changes to take effect." -ForegroundColor Yellow
+        
+        # Optionally restart ColdFusion services
+        $restartServices = Read-Host "Would you like to restart ColdFusion services now? (y/n)"
+        if ($restartServices -eq 'y') {
+            Write-Host "Restarting ColdFusion services..."
+            Get-Service "ColdFusion 2021*" | Stop-Service -Force
+            Start-Sleep -Seconds 5
+            Get-Service "ColdFusion 2021*" | Start-Service
+            Write-Host "Services have been restarted." -ForegroundColor Green
+        }
+    }
+    catch {
+        Write-Error "An error occurred: $_"
+        return $false
+    }
+}
+
+# Example usage:
+# Set-RegistryPermissions -ServiceAccount "DOMAIN\CFServiceAccount"
+# Or for a local account:
+# Set-RegistryPermissions -ServiceAccount ".\CFServiceAccount"
+
+```
+
+
 ## Creating the New Instance
 
 1. Create the new instance through the ColdFusion Administrator
