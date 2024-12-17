@@ -106,6 +106,22 @@ function Set-RegistryPermissions {
 ## Or for a local account:
 ## Set-RegistryPermissions -ServiceAccount ".\CFServiceAccount"
 
+## Why Manual Instance Creation?
+
+While ColdFusion Administrator and its API provide built-in functionality for creating new instances, this guide uses a manual approach for several security-specific reasons:
+
+1. In security-hardened environments, the CF Administrator's instance creation process may fail due to restricted service account permissions
+2. Manual creation gives more control over:
+   - File permissions and ownership
+   - Service account configurations
+   - Security settings from the start
+3. The manual process ensures compliance with security baselines by:
+   - Copying only necessary files
+   - Avoiding potential security template conflicts
+   - Maintaining strict service account permissions
+
+This approach is specifically designed for environments where security compliance (like STIGS) are required. If you're working in a non-security-hardened environment, you may prefer using the CF Administrator's built-in instance creation tools.
+
 ## Creating the New Instance
 
 1. Create the new instance through the ColdFusion Administrator
