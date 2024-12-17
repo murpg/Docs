@@ -22,10 +22,9 @@ After modifying permissions, restart all ColdFusion services.
 
 ## Apply permissions with Powershell
 
-```
-# Requires running as Administrator
-#Requires -RunAsAdministrator
+## Requires running as Administrator
 
+```
 function Set-RegistryPermissions {
     param (
         [Parameter(Mandatory=$true)]
@@ -100,13 +99,12 @@ function Set-RegistryPermissions {
     }
 }
 
-# Example usage:
-# Set-RegistryPermissions -ServiceAccount "DOMAIN\CFServiceAccount"
-# Or for a local account:
-# Set-RegistryPermissions -ServiceAccount ".\CFServiceAccount"
-
 ```
 
+## Example usage:
+## Set-RegistryPermissions -ServiceAccount "DOMAIN\CFServiceAccount"
+## Or for a local account:
+## Set-RegistryPermissions -ServiceAccount ".\CFServiceAccount"
 
 ## Creating the New Instance
 
