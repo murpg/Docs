@@ -6,6 +6,7 @@ A collection of technical guides and documentation.
 - [Docs](#docs)
   - [Table of Contents](#table-of-contents)
   - [Creating Additional ColdFusion Instances in a Secure Baseline Environment {#coldfusion-instances}](#creating-additional-coldfusion-instances-in-a-secure-baseline-environment-coldfusion-instances)
+  - [Git stash is a powerful feature... {#git-stash}](#git-stash-is-a-powerful-feature-git-stash)
 
 ## Creating Additional ColdFusion Instances in a Secure Baseline Environment {#coldfusion-instances}
 
@@ -16,3 +17,6 @@ The guide is particularly valuable for system administrators and DevOps engineer
 [Creating Additional ColdFusion Instances](https://github.com/murpg/Docs/blob/main/add-another-instance-coldfusion.md)
 
 [Git Stash: A Comprehensive Guide](https://github.com/murpg/Docs/blob/main/git-stash.md)
+
+## Git stash is a powerful feature... {#git-stash}
+Git stash is a powerful feature that temporarily shelves (or stashes) changes you've made to your working copy so you can switch to another task, and then come back and re-apply them later.
