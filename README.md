@@ -14,3 +14,5 @@ This comprehensive guide details the process of creating additional ColdFusion i
 The guide is particularly valuable for system administrators and DevOps engineers working in secure environments, as it includes extensive error handling, verification steps, and best practices. It covers everything from basic setup to troubleshooting common issues, with special attention paid to service account permissions and proper service management in a security-baseline environment.
 
 [Creating Additional ColdFusion Instances](https://github.com/murpg/Docs/blob/main/add-another-instance-coldfusion.md)
+
+[Git Stash: A Comprehensive Guide](https://github.com/murpg/Docs/blob/main/git-stash.md)
