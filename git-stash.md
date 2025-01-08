@@ -89,6 +89,17 @@ To create a new branch and apply stashed changes to it:
 git stash branch new-branch-name stash@{n}
 ```
 
+## Important Note About Stashes
+
+Stashes are strictly local and are not pushed to remote repositories. When you:
+- Push a branch, your stashes stay on your local machine
+- Clone a repository, you won't get any stashes that existed on other machines
+- Pull from remote, you won't receive any stashes
+
+If you need to share stashed changes with others, you should either:
+1. Apply the stash and commit the changes properly
+2. Create a branch from your stash using `git stash branch`
+
 ## Best Practices
 
 1. **Always add a descriptive message** to your stashes to make them easily identifiable later.
